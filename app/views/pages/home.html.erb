@@ -1,0 +1,242 @@
+<!-- app/views/pages/home.html.erb -->
+
+<nav class="navbar navbar-expand-lg hm-navbar py-3">
+  <div class="container">
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <span class="dot"></span>
+      <span>Hashtag Marseille</span>
+    <% end %>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#hmNav"
+      aria-controls="hmNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="hmNav" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#about">À propos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#values">Nos valeurs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#projects">Mes projets</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header class="hm-hero py-5">
+  <div class="container py-4">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-7">
+        <span class="badge-city mb-3">Marseille — Bleu #04BCF9</span>
+        <h1 class="display-5 mb-3">
+          Un collectif au service des projets marseillais
+        </h1>
+        <p class="lead mb-4">
+          Nous accompagnons les initiatives locales avec passion :
+          communication, événements, production de contenu et mise en réseau.
+        </p>
+        <div class="d-flex gap-3">
+          <a href="#projects" class="btn btn-lg cta-primary"
+            >Voir nos projets</a
+          >
+          <a href="#contact" class="btn btn-lg btn-outline-dark"
+            >Nous contacter</a
+          >
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <%=
+          image_tag 'hero-marseille.jpg',
+                    alt: 'Marseille',
+                    class: 'img-fluid rounded-4 shadow-sm'
+        %>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about" class="section">
+  <div class="container">
+    <div class="row justify-content-center text-center mb-4">
+      <div class="col-lg-8">
+        <h2 class="section-title">À propos</h2>
+        <p class="section-subtitle mx-auto">
+          Hashtag Marseille met en lumière les projets du territoire en
+          mobilisant une communauté de bénévoles, de créateurs et de partenaires
+          locaux.
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="hm-card h-100">
+          <div class="icon mb-3">📣</div>
+          <h5 class="mb-2">Communication</h5>
+          <p class="mb-0">
+            Campagnes locales, réseaux sociaux, relations presse, identité
+            visuelle.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="hm-card h-100">
+          <div class="icon mb-3">🎬</div>
+          <h5 class="mb-2">Contenu</h5>
+          <p class="mb-0">
+            Photo, vidéo, rédaction — on raconte vos histoires avec
+            authenticité.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="hm-card h-100">
+          <div class="icon mb-3">🤝</div>
+          <h5 class="mb-2">Réseau</h5>
+          <p class="mb-0">
+            Mise en relation avec l’écosystème marseillais : talents, lieux,
+            sponsors.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="values" class="section bg-light">
+  <div class="container">
+    <div class="row justify-content-center text-center mb-4">
+      <div class="col-lg-8">
+        <h2 class="section-title">Nos valeurs</h2>
+        <p class="section-subtitle mx-auto">
+          Attachement au territoire, énergie positive, transparence et impact
+          réel.
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="hm-card h-100">
+          <h5>Local & authentique</h5>
+          <p class="mb-0">
+            On valorise les initiatives d’ici, avec une esthétique claire et
+            moderne.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="hm-card h-100">
+          <h5>Ouvert & collaboratif</h5>
+          <p class="mb-0">
+            Chacun peut contribuer : bénévoles, associations, institutions et
+            entreprises.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="section">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <div>
+        <h2 class="section-title mb-1">Mes projets</h2>
+        <div class="small text-muted">Bientôt en carousel dynamique (CRUD)</div>
+      </div>
+      <div>
+        <span class="project-pill">Actualisé régulièrement</span>
+      </div>
+    </div>
+
+    <!-- Placeholder statique — on branchera sur Projects#index + carousel ensuite -->
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="hm-card h-100">
+          <h6 class="text-uppercase text-muted mb-1">Projet</h6>
+          <h5 class="mb-2">Quartier en fête</h5>
+          <p class="mb-0">
+            Événement local avec artisans, musique et stands solidaires.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="hm-card h-100">
+          <h6 class="text-uppercase text-muted mb-1">Projet</h6>
+          <h5 class="mb-2">Expo photo</h5>
+          <p class="mb-0">
+            Jeunes talents, regards sur Marseille, exposition itinérante.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="hm-card h-100">
+          <h6 class="text-uppercase text-muted mb-1">Projet</h6>
+          <h5 class="mb-2">Podcast local</h5>
+          <p class="mb-0">
+            Portraits d’acteurs du territoire et parcours inspirants.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <%# <%=
+        <%# link_to 'Tous les projets', projects_path, class: 'btn btn-outline-dark' %>
+      <%# %>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section bg-light">
+  <div class="container">
+    <div class="row justify-content-center text-center mb-4">
+      <div class="col-lg-8">
+        <h2 class="section-title">Contact</h2>
+        <p class="section-subtitle mx-auto">
+          Une idée, un projet ? Parlons-en.
+        </p>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="hm-card">
+          <p class="mb-2">
+            <strong>Email</strong> — contact@hashtag-marseille.org
+          </p>
+          <p class="mb-2"><strong>Réseaux</strong> — Instagram / Facebook</p>
+          <p class="mb-0"><strong>Adresse</strong> — Marseille, France</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="hm-footer py-4">
+  <div
+    class="container d-flex flex-wrap justify-content-between align-items-center gap-3"
+  >
+    <div class="small">© <%= Time.current.year %> Hashtag Marseille</div>
+    <div class="small">
+      <a href="#about">À propos</a> · <a href="#projects">Projets</a> ·
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
