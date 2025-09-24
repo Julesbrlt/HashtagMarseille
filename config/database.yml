@@ -1,25 +1,25 @@
-# SQLite. Versions 3.8.0 and up are supported.
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem "sqlite3"
-#
 default: &default
-  adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  # timeout est géré côté PG, pas besoin ici
+  # En dev on peut se connecter en "peer" sans password
 
 development:
   <<: *default
-  database: storage/development.sqlite3
+  database: <%= "#{Rails.application.class.module_parent_name.underscore}_development" %>
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: storage/test.sqlite3
+  database: <%= "#{Rails.application.class.module_parent_name.underscore}_test" %>
 
 production:
   <<: *default
-  database: storage/production.sqlite3
+  # En prod, utilise DATABASE_URL (Render/Heroku) ou remplis ci-dessous
+  url: <%= ENV["DATABASE_URL"] %>
+  # Si tu n'as pas DATABASE_URL, tu peux renseigner :
+  # host: <%= ENV["PGHOST"] %>
+  # database: <%= ENV["PGDATABASE"] %>
+  # username: <%= ENV["PGUSER"] %>
+  # password: <%= ENV["PGPASSWORD"] %>
+  # port: <%= ENV.fetch("PGPORT", 5432) %>

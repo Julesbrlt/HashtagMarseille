@@ -1,6 +1,136 @@
 <div class="hero">
   <div class="hero-content">
-    <h1>Hashtag Marseille</h1>
-    <p>Un collectif au service des initiatives locales</p>
+    <h1>
+      <span class="blue">HASHTAG</span><span class="white">marseille</span>
+    </h1>
+    <p class="hero-subtitle">Déplacer les bornes</p>
   </div>
 </div>
+<div class="container-description">
+  <div class="description">
+    <h2 class="desc-title"><span class="blue">HASHTAG</span> MARSEILLE</h2>
+
+    <p class="desc-text">
+      <span class="blue-light">HASHTAG</span><em>marseille</em> est un fonds de
+      dotation privé, dont la vocation est de mettre l’accent et de soutenir des
+      causes touchant <strong>Marseille et les marseillais</strong>. Pour cela,
+      le fonds s’appuie sur des acteurs de terrain afin de co-construire des
+      projets sérieux et pertinents, dans le champ de l’éducation, de la
+      culture, du sport ou encore de l’économie sociale et solidaire ; son
+      action se traduit à la fois par un soutien financier mais aussi par un
+      accompagnement opérationnel.
+    </p>
+
+    <p class="desc-note">
+      Si vous pensez que votre projet mérite d’être soutenu par
+      <span class="blue-light">HASHTAG</span><em>marseille</em>, merci de
+      déposer <a href="#" class="desc-link"><em>un dossier de sélection</em></a
+      >.
+    </p>
+  </div>
+</div>
+<section class="pillars">
+  <div class="pillars-grid">
+    <article class="pillar">
+      <div class="pillar-icon">
+        <%= image_tag "book.png", alt: "Book", aria_hidden: true %>
+      </div>
+      <div class="pillar-body">
+        <h3 class="pillar-title">EDUCATION</h3>
+        <p class="pillar-text">
+          Aide pour trouver des stages et des actions en faveur de l’éducation…
+        </p>
+      </div>
+    </article>
+
+    <article class="pillar">
+      <div class="pillar-icon">
+        <%= image_tag "compassion.png", alt: "Hand-heart", aria_hidden: true %>
+      </div>
+      <div class="pillar-body">
+        <h3 class="pillar-title">SOCIAL</h3>
+        <p class="pillar-text">
+          Soutien auprès des acteurs sociaux dans les quartiers…
+        </p>
+      </div>
+    </article>
+
+    <article class="pillar">
+      <div class="pillar-icon">
+        <%= image_tag "network.png", alt: "Network", aria_hidden: true %>
+      </div>
+      <div class="pillar-body">
+        <h3 class="pillar-title">CULTURE</h3>
+        <p class="pillar-text">Support aux actions culturelles, …</p>
+      </div>
+    </article>
+
+    <article class="pillar">
+      <div class="pillar-icon">
+        <%= image_tag "running.png", alt: "Running", aria_hidden: true %>
+      </div>
+      <div class="pillar-body">
+        <h3 class="pillar-title">SPORT</h3>
+        <p class="pillar-text">
+          Appui pour le développement d’activités sportives, extra-scolaires…
+        </p>
+      </div>
+    </article>
+  </div>
+</section>
+<section
+  id="projects"
+  class="projects-section"
+  data-controller="projects"
+  data-projects-step-value="0.9"
+  data-projects-carousel-autoplay-value="false"
+  data-projects-carousel-interval-value="5000"
+>
+  <div class="projects-header">
+    <h2>PROJETS SOUTENUS</h2>
+
+    <%# <% if current_user&.admin? %>
+      <%= link_to "+", new_project_path, class: "projects-add", title: "Ajouter un projet" %>
+    <%# <% end %>
+  </div>
+
+  <div class="projects-carousel">
+    <button
+      class="projects-nav nav-prev"
+      type="button"
+      aria-label="Précédent"
+      data-action="projects#prev"
+    >
+      ‹
+    </button>
+
+    <div class="projects-track" data-projects-target="track">
+      <% @projects.each do |project| %>
+        <article class="project-card" data-projects-target="card">
+          <div class="project-thumb">
+            <% if project.image.attached? %>
+              <%= image_tag project.image, alt: project.name %>
+            <% else %>
+              <div class="project-thumb-placeholder">Aperçu indisponible</div>
+            <% end %>
+          </div>
+          <h3 class="project-name">
+            <%= link_to project.name, project_path(project) %>
+          </h3>
+          <p class="project-desc">
+            <%= truncate(project.description, length: 140) %>
+          </p>
+        </article>
+      <% end %>
+    </div>
+
+    <button
+      class="projects-nav nav-next"
+      type="button"
+      aria-label="Suivant"
+      data-action="projects-#next"
+    >
+      ›
+    </button>
+  </div>
+</section>

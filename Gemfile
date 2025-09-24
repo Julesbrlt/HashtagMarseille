@@ -29,6 +29,8 @@ gem "jbuilder"
 gem "simple_form"
 gem 'dartsass-sprockets'
 gem 'bootstrap', '~> 5.3.3'
+gem "pg", "~> 1.5"
+
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"

@@ -3,4 +3,35 @@
   $brand-blue: #04BCF9;
   $brand-white: #ffffff;
   $text-dark: #14213d;
+  $text-muted: #5a5a5a;
+
+body {
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 35px;
+}
+
+h2 {
+  color: $brand-blue;
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-family:"Raleway", sans-serif ;
+}
+
+.blue {
+  color: $brand-blue;
+  font-weight: 700;
+}
+
+.blue-light {
+  color: $brand-blue;
+  font-weight: 600;
+}
+
+.white {
+  color: $brand-white;
+  font-weight: 600;
+  font-style: italic;
+}
 

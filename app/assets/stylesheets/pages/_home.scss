@@ -1,18 +1,271 @@
 .hero {
   height: 100vh;
   width: 100%;
-  background-image: image-url("hero-marseille.jpg");
+  background-image: linear-gradient(rgba(28, 27, 27, 0.6), rgba(31, 29, 29, 0.6)), image-url("hero-marseille.jpg");
   background-size: cover;
-  background-position: center 30%;
+  background-position: center 27%;
   background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
   text-align: center;
-};
+  font-family: "Raleway", sans-serif;
+
+    .hero-subtitle {
+      font-family: 'Luckiest Guy';
+      font-size: 2rem;
+    }
+}
 
 .hero h1 {
-  font-size: 3rem;
+  font-size: 4.5rem;
   font-weight: bold;
+}
+
+.container-description {
+  padding-left: 90px;
+  padding-right: 90px;
+  padding-top: 100px;
+  padding-bottom: 70px;
+  background-color: $brand-white;
+}
+
+.description {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.desc-text {
+  margin-top: 30px;
+}
+
+.desc-note {
+  color: $text-muted;
+}
+
+.desc-link {
+  font-family: "Raleway", sans-serif;
+  color: black;
+}
+
+.pillars {
+  padding: 48px 40px;
+  background: #fff;
+}
+
+.pillars-grid {
+  max-width: 950px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* 2 colonnes */
+  gap: 42px 64px;
+  /* vertical / horizontal */
+}
+
+.pillar {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  align-items: start;
+  column-gap: 18px;
+}
+
+.pillar-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: $brand-blue;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 20px rgba(4, 188, 249, .25);
+}
+
+.pillar-icon img {
+  width: 30px;
+  height: 30px;
+  filter: brightness(0) invert(1);
+  /* si icône foncée => blanc */
+}
+
+.pillar-title {
+  margin: 4px 0 6px;
+  font-size: 1rem;
+  letter-spacing: .04em;
+  font-weight: 700;
+  color: #111;
+}
+
+.pillar-text {
+  margin: 0;
+  color: $text-muted;
+  line-height: 1.9;
+}
+
+/* Responsive: 1 colonne sous 900px */
+@media (max-width: 900px) {
+  .pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+// PROJECTS //
+
+.projects-section {
+  background: $brand-white;
+  padding: 40px 16px;
+}
+
+.projects-header {
+  max-width: 1100px;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.projects-title {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: $brand-blue;
+  text-align: center;
+}
+
+.projects-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: $brand-blue;
+  color: $brand-white;
+  text-decoration: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  box-shadow: 0 8px 24px rgba($brand-blue, 0.25);
+
+  &:hover {
+    opacity: .92;
+  }
+}
+
+/* Carrousel */
+.projects-carousel {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  gap: 8px;
+  align-items: center;
+}
+
+.projects-track {
+  overflow-x: auto;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(260px, 32%);
+  gap: 16px;
+  padding: 8px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .15);
+    border-radius: 8px;
+  }
+}
+
+.project-card {
+  scroll-snap-align: start;
+  background: $brand-white;
+  border: 1px solid rgba(20, 33, 61, .06); // basé sur $text-dark
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 8px 24px rgba(20, 33, 61, .06);
+}
+
+.project-thumb {
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.project-thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, lighten($brand-blue, 40%), lighten($brand-blue, 45%));
+  color: $text-muted;
+  font-size: .9rem;
+}
+
+.project-name {
+  margin: 6px 0 4px;
+  font-weight: 700;
+  font-size: 1rem;
+
+  a {
+    color: $text-dark;
+    text-decoration: none;
+
+    &:hover {
+      color: $brand-blue;
+    }
+  }
+}
+
+.project-desc {
+  margin: 0;
+  color: $text-muted;
+  line-height: 1.6;
+  font-size: .95rem;
+}
+
+/* Flèches */
+.projects-nav {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: lighten($text-muted, 35%);
+  color: $text-dark;
+  font-size: 1.4rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+
+  &:hover {
+    background: lighten($text-muted, 25%);
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .projects-carousel {
+    grid-template-columns: 32px 1fr 32px;
+  }
+
+  .projects-track {
+    grid-auto-columns: 85%;
+  }
 }
