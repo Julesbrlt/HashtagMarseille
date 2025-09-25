@@ -78,59 +78,34 @@
     </article>
   </div>
 </section>
-<section
-  id="projects"
-  class="projects-section"
-  data-controller="projects"
-  data-projects-step-value="0.9"
-  data-projects-carousel-autoplay-value="false"
-  data-projects-carousel-interval-value="5000"
->
-  <div class="projects-header">
-    <h2>PROJETS SOUTENUS</h2>
+<section class="projects-section">
+  <header class="projects-header">
+    <div></div>
+    <h2 class="projects-title">PROJETS SOUTENUS</h2>
 
     <%# <% if current_user&.admin? %>
       <%= link_to "+", new_project_path, class: "projects-add", title: "Ajouter un projet" %>
     <%# <% end %>
-  </div>
+  </header>
 
-  <div class="projects-carousel">
-    <button
-      class="projects-nav nav-prev"
-      type="button"
-      aria-label="Précédent"
-      data-action="projects#prev"
-    >
-      ‹
-    </button>
+  <div class="projects-grid">
+    <% @projects.each do |project| %>
+      <article class="project-card">
+        <div class="project-thumb">
+          <% if project.image.attached? %>
+            <%= image_tag project.image, alt: project.name %>
+          <% else %>
+            <div class="project-thumb-placeholder">Aperçu indisponible</div>
+          <% end %>
+        </div>
 
-    <div class="projects-track" data-projects-target="track">
-      <% @projects.each do |project| %>
-        <article class="project-card" data-projects-target="card">
-          <div class="project-thumb">
-            <% if project.image.attached? %>
-              <%= image_tag project.image, alt: project.name %>
-            <% else %>
-              <div class="project-thumb-placeholder">Aperçu indisponible</div>
-            <% end %>
-          </div>
-          <h3 class="project-name">
-            <%= link_to project.name, project_path(project) %>
-          </h3>
+        <div class="project-body">
+          <h3 class="project-name"><%= project.name %></h3>
           <p class="project-desc">
-            <%= truncate(project.description, length: 140) %>
+            <%= truncate(project.description, length: 160) %>
           </p>
-        </article>
-      <% end %>
-    </div>
-
-    <button
-      class="projects-nav nav-next"
-      type="button"
-      aria-label="Suivant"
-      data-action="projects-#next"
-    >
-      ›
-    </button>
+        </div>
+      </article>
+    <% end %>
   </div>
 </section>

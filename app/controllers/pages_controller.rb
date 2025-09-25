@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
   def home
-    @projects = Project.order(created_at: :desc)
+    @projects = Project.order(created_at: :asc)
   end
 end
