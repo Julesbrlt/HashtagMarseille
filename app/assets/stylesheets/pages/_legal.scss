@@ -1,0 +1,81 @@
+/* Variables de ta charte */
+$brand-blue: #04BCF9;
+$brand-white: #ffffff;
+$text-dark: #14213d;
+$text-muted: #5a5a5a;
+
+/* Police stricte (serif) */
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap");
+
+.legal-page {
+  background: $brand-white;
+  color: $text-dark;
+  font-family: "Libre Baskerville", Georgia, serif;
+  line-height: 1.9;
+  padding: 64px 16px;
+}
+
+.legal-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.legal-title {
+  text-align: center;
+  margin: 0 0 28px;
+  font-size: clamp(2rem, 3.8vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+/* Sections */
+.legal-section {
+  margin-bottom: 22px;
+}
+
+.legal-section h2 {
+  margin: 0 0 10px;
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: .02em;
+  position: relative;
+  color: $text-dark;
+}
+
+/* Petit filet discret sous les sous-titres (optionnel, pro) */
+.legal-section h2::after {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 2px;
+  background: $brand-blue;
+  margin-top: 6px;
+  opacity: .85;
+}
+
+.legal-section p {
+  margin: 0 0 10px;
+  color: $text-muted;
+  font-size: 1rem;
+}
+
+/* Liens */
+.legal-section a {
+  color: $brand-blue;
+  text-decoration: underline;
+}
+
+.legal-section a:hover {
+  opacity: .85;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .legal-page {
+    padding: 48px 12px;
+  }
+
+  .legal-title {
+    margin-bottom: 22px;
+  }
+}
