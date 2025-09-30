@@ -112,13 +112,6 @@
 
 // PROJECTS //
 
-/* variables dispo :
-$brand-blue: #04BCF9;
-$brand-white: #ffffff;
-$text-dark: #14213d;
-$text-muted: #5a5a5a;
-*/
-
 .projects-section {
   background: $brand-white;
   padding: 40px 16px;
@@ -164,12 +157,14 @@ $text-muted: #5a5a5a;
 }
 
 /* Grille des cartes */
-.projects-grid {
+.projects-carousel {
+  position: relative;
   max-width: 1100px;
-  margin: 0 auto;
+  margin: 0 auto 32px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 18px;
+  grid-template-columns: 48px 1fr 48px;
+  gap: 8px;
+  align-items: center;
 }
 
 /* Carte : 60% image / 40% texte */
@@ -237,16 +232,72 @@ $text-muted: #5a5a5a;
   font-size: .95rem;
 }
 
-/* responsive */
-@media (max-width: 900px) {
-  .projects-header {
-    grid-template-columns: 1fr auto;
+/* === 1 carte visible === */
+.pc-viewport {
+  /* largeur d’UNE carte + (facultatif) un léger “peek” */
+  --slide-w: 380px;
+  /* ajuste à ta card (420–460 si tu veux plus large) */
+  --peek: 0px;
+  /* mets 12px si tu veux deviner la suivante/précédente */
+
+  width: calc(var(--slide-w) + var(--peek) * 2);
+  overflow: hidden;
+  margin: 0 auto;
+  padding-inline: var(--peek);
+}
+
+.pc-track {
+  display: flex;
+  gap: 24px;
+  /* IMPORTANT : doit matcher le JS (this.gap) */
+  will-change: transform;
+  transition: transform .45s ease;
+}
+
+/* chaque slide occupe EXACTEMENT la largeur définie */
+.pc-slide {
+  flex: 0 0 var(--slide-w);
+  width: var(--slide-w);
+  transform: scale(.97);
+  opacity: .92;
+  transition: transform .3s ease, opacity .3s ease, box-shadow .3s ease;
+}
+
+.pc-slide.is-active {
+  transform: scale(1);
+  opacity: 1;
+  box-shadow: 0 14px 36px rgba(20, 33, 61, .10);
+}
+
+/* flèches */
+.pc-arrow {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 999px;
+  background: #e9eef3;
+  color: #14213d;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 1.4rem;
+}
+
+.pc-arrow:hover {
+  background: #dbe4ec;
+}
+
+/* responsive : une carte un peu plus petite sur mobile */
+@media (max-width: 600px) {
+  .pc-viewport {
+    --slide-w: 320px;
   }
+}
 
   .projects-title {
     justify-self: start;
   }
-}
+
 
 // MID BG IMG //
 
