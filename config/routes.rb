@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: { sessions: 'users/sessions' }, skip:[:registrations]
+
   root "pages#home"
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -8,7 +10,7 @@ Rails.application.routes.draw do
   get "mentions-legales", to: "pages#legal", as: :mentions_legales
   get "politique-confidentialite", to: "pages#privacy", as: :politique_confidentialite
 
-  resources :projects, only: [:show, :new, :create, :destroy]
+  resources :projects, except: [:index]
   # Defines the root path route ("/")
   # root "posts#index"
 end

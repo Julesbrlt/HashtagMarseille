@@ -1,4 +1,4 @@
-<h1>Ajouter un projet</h1>
+<h1>Modifier le projet</h1>
 <%= simple_form_for(@project, html: { multipart: true, class: "card p-4 shadow-sm" }) do |f| %>
   <div class="mb-3">
     <%=
@@ -41,6 +41,6 @@
 
   <div class="d-flex justify-content-between mt-4">
     <%= f.button :submit, class: "btn btn-primary" %>
-    <%= link_to "Annuler", root_path, class: "btn btn-outline-secondary" %>
+    <%= link_to "Annuler", project_path(@project), class: "btn btn-outline-secondary" %>
   </div>
 <% end %>

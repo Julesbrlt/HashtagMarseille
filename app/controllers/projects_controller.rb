@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  # before_action :require_admin!, except: [:show]
+  before_action :require_admin!, except: [:show]
 
   def show
     @project = Project.find(params[:id])
@@ -14,15 +14,28 @@ class ProjectsController < ApplicationController
     if @project.save
       redirect_to project_path(@project)
     else
-      render new
+      render :new
     end
+  end
 
-    def destroy
-    project = Project.find(params[:id])
-    project.destroy
+  def edit
+    @project = Project.find(params[:id])
+  end
+
+  def update
+    @project = Project.find(params[:id])
+    if @project.update(params_project)
+      redirect_to project_path(@project)
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @project = Project.find(params[:id])
+    @project.destroy
     redirect_to root_path, notice: "Projet supprimé."
   end
-end
 
   private
 
@@ -30,9 +43,9 @@ end
     params.require(:project).permit(:name, :description, :image)
   end
 
-  # def require_admin!
-  #   unless current_user&.admin?
-  #     redirect_to root_path, alert: "Accès réservé à l’administrateur."
-  #   end
-  # end
+  def require_admin!
+    unless current_user&.admin?
+      redirect_to root_path, alert: "Accès réservé à l’administrateur."
+    end
+  end
 end
