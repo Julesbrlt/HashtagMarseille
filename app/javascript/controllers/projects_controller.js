@@ -1,100 +1,69 @@
+// app/javascript/controllers/projects_controller.js
 import { Controller } from "@hotwired/stimulus";
+import EmblaCarousel from "embla-carousel";
 
-// Carrousel 1 slide au centre, boucle infinie
 export default class extends Controller {
-  static targets = ["viewport", "track", "slide"];
-  static values = { index: Number };
+  static targets = ["viewport", "dots"];
 
   connect() {
-    // bind pour removeEventListener proprement
-    this._onResize = this._onResize.bind(this);
+    this.embla = EmblaCarousel(this.viewportTarget, {
+      loop: true,
+      align: "center",
+      containScroll: "trimSnaps",
+      slidesToScroll: 1,
+      duration: 28, // un poil plus long = plus smooth (20 par défaut)
+      dragFree: false,
+    });
 
-    // params init
-    this.gap = 24; // doit refléter le gap CSS entre slides
-    window.addEventListener("resize", this._onResize, { passive: true });
-
-    this._measure();
-    this._apply(true); // sans anim au premier rendu
+    this._buildDots();
+    this._onSelect = this._onSelect.bind(this);
+    this.embla.on("select", this._onSelect);
+    this._onSelect();
   }
 
   disconnect() {
-    window.removeEventListener("resize", this._onResize);
+    this.embla?.destroy();
   }
 
-  // Actions
   prev() {
-    this._goTo(this._wrap(this.indexValue - 1));
+    this.embla?.scrollPrev();
   }
   next() {
-    this._goTo(this._wrap(this.indexValue + 1));
+    this.embla?.scrollNext();
   }
 
-  // --- internes ---
-  _measure() {
-    if (!this.hasSlideTarget) return;
-
-    // 1) si tu as défini --slide-w au niveau du viewport, on l'utilise
-    const cssSlideW = getComputedStyle(this.viewportTarget).getPropertyValue(
-      "--slide-w"
-    );
-    if (cssSlideW) {
-      this.slideW = parseFloat(cssSlideW);
-    } else {
-      // fallback : mesure réelle du premier slide
-      const rect = this.slideTargets[0].getBoundingClientRect();
-      this.slideW = rect.width;
-    }
-
-    // largeur visible du viewport (pour centrage)
-    this.viewportW = this.viewportTarget.getBoundingClientRect().width;
-
-    // gap lu depuis le CSS (si changé)
-    const style = getComputedStyle(this.trackTarget);
-    const parsedGap = parseFloat(style.columnGap || style.gap || 0);
-    if (!Number.isNaN(parsedGap)) this.gap = parsedGap;
-  }
-
-  _centerOffsetFor(index) {
-    // on veut centrer la slide index :
-    // translation X = centre viewport - centre slide index
-    const slideCenter = index * (this.slideW + this.gap) + this.slideW / 2;
-    const viewportCenter = this.viewportW / 2;
-    return viewportCenter - slideCenter;
-  }
-
-  _apply(skipAnim = false) {
-    if (!this.hasSlideTarget) return;
-    const x = this._centerOffsetFor(this.indexValue);
-
-    if (skipAnim) this.trackTarget.style.transition = "none";
-    this.trackTarget.style.transform = `translateX(${x}px)`;
-    if (skipAnim) {
-      // force reflow pour réactiver la transition
-      // eslint-disable-next-line no-unused-expressions
-      this.trackTarget.offsetHeight;
-      this.trackTarget.style.transition = "";
-    }
-    this._markActive();
-  }
-
-  _goTo(i) {
-    this.indexValue = this._wrap(i);
-    this._apply();
-  }
-
-  _wrap(i) {
-    const n = this.slideTargets.length;
-    return ((i % n) + n) % n;
-  }
-
-  _markActive() {
-    this.slideTargets.forEach((el, idx) => {
-      el.classList.toggle("is-active", idx === this.indexValue);
+  _buildDots() {
+    if (!this.hasDotsTarget) return;
+    const slides = this.embla.slideNodes();
+    this.dots = slides.map((_, i) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "embla__dot";
+      dot.addEventListener("click", () => this.embla.scrollTo(i));
+      this.dotsTarget.appendChild(dot);
+      return dot;
     });
   }
 
-  _onResize() {
-    this._measure();
-    this._apply(true);
+  _onSelect() {
+    const selected = this.embla.selectedScrollSnap();
+    const slides = this.embla.slideNodes();
+    const prev =
+      this.embla.scrollSnapList().length > 1
+        ? (selected - 1 + slides.length) % slides.length
+        : selected;
+    const next =
+      this.embla.scrollSnapList().length > 1
+        ? (selected + 1) % slides.length
+        : selected;
+
+    slides.forEach((el, i) => {
+      el.classList.toggle("is-selected", i === selected);
+      el.classList.toggle("is-prev", i === prev);
+      el.classList.toggle("is-next", i === next);
+    });
+    this.dots?.forEach((d, i) =>
+      d.classList.toggle("is-active", i === selected)
+    );
   }
 }

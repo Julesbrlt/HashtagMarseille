@@ -157,155 +157,226 @@
 }
 
 /* Grille des cartes */
-.projects-carousel {
-  display: flex;
-  justify-content: center;
+/* ----- Embla layout (3 visibles) ----- */
+.embla {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto 48px;
+}
+
+.embla__viewport {
+  overflow: hidden;
   position: relative;
 }
 
-/* Carte : 60% image / 40% texte */
+/* Masques doux aux bords */
+.embla__viewport::before,
+.embla__viewport::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 48px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.embla__viewport::before {
+  left: 0;
+  background: linear-gradient(to right, #fff 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.embla__viewport::after {
+  right: 0;
+  background: linear-gradient(to left, #fff 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+:root {
+  --gap: 24px;
+  /* espace entre slides */
+  --slide-pad: 8px;
+  /* air autour de chaque slide pour laisser la card grossir */
+}
+
+/* IMPORTANT : on compense le padding des slides ici pour conserver un espacement constant,
+   y compris au “joint” (wrap infini) */
+.embla__container {
+  display: flex;
+  gap: var(--gap);
+  padding-inline: calc(var(--gap)/2 + var(--slide-pad));
+  padding-block: 18px;
+  will-change: transform;
+}
+
+/* 3 visibles : (100% - 2*gap) / 3, avec un padding pour donner de l’air à la card */
+.embla__slide {
+  flex: 0 0 calc((100% - 2*var(--gap)) / 3);
+  padding-inline: var(--slide-pad);
+}
+
+/* ----- Cards uniformes ----- */
 .project-card {
-  background: $brand-white;
-  border: 2px solid rgba(0, 0, 0, 0.08);
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(20, 33, 61, .06);
-  overflow: hidden;
-  text-decoration: none;
-  height: 420px;
   display: flex;
   flex-direction: column;
+  height: 420px;
+  /* toutes même hauteur */
+  border-radius: 16px;
+  background: #fff;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
 
-  transition: transform .18s ease, box-shadow .18s ease;
-  will-change: transform;
+  /* ombre sur TOUTES les cards */
+  box-shadow: 0 10px 24px rgba(20, 33, 61, .08);
 
-  &:hover {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 16px 40px rgba(20, 33, 61, .12);
-  }
+  /* on réduit très légèrement toutes les cards,
+     la centrale paraîtra donc clairement plus grande */
+  transform: translateZ(0) scale(.96);
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
 }
 
+/* vignette ratio fixe pour l’uniformité */
 .project-thumb {
+  aspect-ratio: 16 / 10;
   width: 100%;
-  height: 80%;
-  background: #f2f4f8;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+  overflow: hidden;
 }
 
-.project-thumb-placeholder {
+.project-thumb img {
   width: 100%;
   height: 100%;
-  display: grid;
-  place-items: center;
-  color: $text-muted;
-  font-size: .95rem;
-  background: linear-gradient(135deg, #eef6ff, #e9f2ff);
+  object-fit: cover;
+  display: block;
 }
 
 .project-body {
-  flex: 1 0 40%;
-  padding: 12px 14px;
   display: flex;
   flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  overflow: hidden;
 }
 
 .project-name {
-  margin: 2px 0 6px;
   font-weight: 800;
   font-size: 1.05rem;
-  color: $text-dark;
+  line-height: 1.2;
+  color: #14213d;
 }
 
 .project-desc {
-  margin: 0;
-  color: $text-muted;
-  line-height: 1.6;
   font-size: .95rem;
-}
-
-/* === 1 carte visible === */
-.pc-viewport {
-  /* largeur d’UNE carte + (facultatif) un léger “peek” */
-  --slide-w: 380px;
-  /* ajuste à ta card (420–460 si tu veux plus large) */
-  --peek: 0px;
-  /* mets 12px si tu veux deviner la suivante/précédente */
-  position: relative;
-
-  width: calc(var(--slide-w) + var(--peek) * 2);
+  color: #5a5a5a;
+  line-height: 1.5;
   overflow: hidden;
-  margin: 0 auto;
-  padding-inline: var(--peek);
 }
 
-.pc-track {
-  display: flex;
-  gap: 24px;
-  /* IMPORTANT : doit matcher le JS (this.gap) */
-  will-change: transform;
-  transition: transform .45s ease;
+/* ---- Centre (slide sélectionnée) : plus grand + ombre plus forte ---- */
+.embla__slide.is-selected .project-card {
+  transform: scale(1.08);
+  /* +8% visible */
+  box-shadow: 0 20px 48px rgba(20, 33, 61, .18);
+  /* ombre accentuée */
+  filter: saturate(1.03);
+  z-index: 2;
+  /* vient au-dessus si chevauchement */
 }
 
-/* chaque slide occupe EXACTEMENT la largeur définie */
-.pc-slide {
-  flex: 0 0 var(--slide-w);
-  width: var(--slide-w);
-  transform: scale(.97);
-  opacity: .92;
-  transition: transform .3s ease, opacity .3s ease, box-shadow .3s ease;
+/* voisines directes : léger lift (optionnel) */
+.embla__slide.is-prev .project-card,
+.embla__slide.is-next .project-card {
+  transform: scale(.98);
 }
 
-.pc-slide.is-active {
-  transform: scale(1);
-  opacity: 1;
-  box-shadow: 0 14px 36px rgba(20, 33, 61, .10);
+
+.embla__slide.is-selected .project-card:hover {
+  transform: scale(1.12) translateY(-2px);
+  box-shadow: 0 22px 48px rgba(20, 33, 61, .22);
 }
 
-/* flèches */
-.pc-arrow {
+.embla__slide .project-card:hover {
+  transform: scale(1.02) translateY(-1px);
+  box-shadow: 0 18px 44px rgba(20, 33, 61, .14);
+}
+
+/* ----- Flèches & dots inchangés ----- */
+.embla__btn {
   position: absolute;
   top: 50%;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: $brand-blue;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
   border: none;
-  color: white;
-  font-weight: 500;
-  font-size: 25px;
+  border-radius: 999px;
+  background: #e9eef3;
+  color: #14213d;
+  cursor: pointer;
   display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  box-shadow: 0 6px 18px rgba(20, 33, 61, .08);
+  z-index: 3;
+}
+
+.embla__btn--prev {
+  left: -12px;
+}
+
+.embla__btn--next {
+  right: -12px;
+}
+
+.embla__btn:hover {
+  background: #dbe4ec;
+}
+
+.embla__dots {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.embla__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #cfd6de;
+  border: 0;
   cursor: pointer;
 }
 
-.pc-arrow--left {
-  left: 470px;
+.embla__dot.is-active {
+  background: #04BCF9;
 }
 
-/* chevauche légèrement la carte */
-.pc-arrow--right {
-  right: 470px;
+/* ----- Responsive ----- */
+@media (max-width: 1024px) {
+  .embla__slide {
+    flex-basis: calc((100% - var(--gap)) / 2);
+  }
+
+  /* 2 visibles */
 }
 
-.pc-arrow:hover {
-  background: #dbe4ec;
-  color: $brand-blue;
-}
+@media (max-width: 640px) {
+  .embla__slide {
+    flex-basis: 100%;
+  }
 
-/* responsive : une carte un peu plus petite sur mobile */
-@media (max-width: 600px) {
-  .pc-viewport {
-    --slide-w: 320px;
+  /* 1 visible */
+  .embla__btn--prev {
+    left: 4px;
+  }
+
+  .embla__btn--next {
+    right: 4px;
+  }
+
+  .project-card {
+    height: 420px;
   }
 }
-
-  .projects-title {
-    justify-self: start;
-  }
 
 
 // MID BG IMG //

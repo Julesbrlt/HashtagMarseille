@@ -1,8 +1,6 @@
 Project.destroy_all
 User.destroy_all
 
-User.create!(email: "christophe@baralotto.com", password: "azerty", admin: true)
-
 projects = [
   {
     name: "Atout Voix",
@@ -48,5 +46,4 @@ projects.each do |data|
   created += 1
 end
 
-puts "✅ #{User.count} utilisateurs créés"
 puts "✅ #{created} projets créés"

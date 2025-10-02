@@ -88,55 +88,56 @@
     <% end %>
   </header>
 
-  <section
-    class="projects-carousel"
-    data-controller="projects"
-    data-projects-index-value="0"
-  >
-    <!-- Flèche gauche -->
-    <button
-      type="button"
-      class="pc-arrow pc-arrow--left"
-      aria-label="Précédent"
-      data-action="projects#prev"
-    >
-      ‹
-    </button>
-
-    <!-- Zone visible -->
-    <div class="pc-viewport" data-projects-target="viewport">
-      <div class="pc-track" data-projects-target="track">
+  <section class="embla" data-controller="projects">
+    <!-- Viewport -->
+    <div class="embla__viewport" data-projects-target="viewport">
+      <div class="embla__container">
         <% @projects.each do |project| %>
-          <%= link_to project_path(project),
-            class: "project-card pc-slide",
-            data: { projects_target: "slide" } do %>
-            <div class="project-thumb">
-              <% if project.image.attached? %>
-                <%= image_tag project.image, alt: project.name %>
-              <% else %>
-                <div class="project-thumb-placeholder">Aperçu indisponible</div>
-              <% end %>
-            </div>
-
-            <div class="project-body">
-              <h3 class="project-name"><%= project.name %></h3>
-              <p class="project-desc">
-                <%= truncate(project.description, length: 160) %>
-              </p>
-            </div>
-          <% end %>
+          <div class="embla__slide">
+            <%= link_to project_path(project), class: "project-card" do %>
+              <div class="project-thumb">
+                <% if project.image.attached? %>
+                  <%= image_tag project.image, alt: project.name %>
+                <% else %>
+                  <div class="project-thumb-placeholder">
+                    Aperçu indisponible
+                  </div>
+                <% end %>
+              </div>
+              <div class="project-body">
+                <h3 class="project-name"><%= project.name %></h3>
+                <p class="project-desc">
+                  <%= truncate(project.description, length: 160) %>
+                </p>
+              </div>
+            <% end %>
+          </div>
         <% end %>
       </div>
     </div>
 
+    <!-- Arrows -->
     <button
+      class="embla__btn embla__btn--prev"
       type="button"
-      class="pc-arrow pc-arrow--right"
+      aria-label="Précédent"
+      data-projects-target="prev"
+      data-action="click->projects#prev"
+    >
+      ‹
+    </button>
+    <button
+      class="embla__btn embla__btn--next"
+      type="button"
       aria-label="Suivant"
-      data-action="projects#next"
+      data-projects-target="next"
+      data-action="click->projects#next"
     >
       ›
     </button>
+
+    <!-- Dots -->
+    <div class="embla__dots" data-projects-target="dots"></div>
   </section>
 </section>
 <div class="mid">
